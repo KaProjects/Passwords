@@ -29,9 +29,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func setupMenus() {
         let menu = NSMenu()
         
-        menu.addItem(NSMenuItem(title: "Add", action: #selector(addCreds), keyEquivalent: "1"))
-        
-        menu.addItem(NSMenuItem.separator())
+//        menu.addItem(NSMenuItem(title: "Add", action: #selector(addCreds), keyEquivalent: "a"))
+//        
+//        menu.addItem(NSMenuItem.separator())
         
         for creds in readCreds() {
             menu.addItem(CredsMenuItem(creds: creds, action: #selector(copyToClipboard(from:))))
@@ -43,16 +43,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         statusItem.menu = menu
     }
-    
-    
-    @objc func addCreds() {
-        var allCreds = readCreds()
-        let newCreds = Credentials(name: "n" + String(allCreds.count), site: String(allCreds.count), username: String(allCreds.count), password: "p" + String(allCreds.count))
-        allCreds.append(newCreds)
-        writeCreds(creds: allCreds)
         
-        setupMenus()
-    }
+//    @objc func addCreds() {
+//        var allCreds = readCreds()
+//        let newCreds = Credentials(id: 1, name: "n" + String(allCreds.count), site: String(allCreds.count), username: String(allCreds.count), password: "p" + String(allCreds.count))
+//        allCreds.append(newCreds)
+//        writeCreds(creds: allCreds)
+//
+//        setupMenus()
+//    }
 
     @objc func copyToClipboard(from: CredsMenuItem) {
         let pasteboard = NSPasteboard.general

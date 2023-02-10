@@ -10,7 +10,7 @@ class CredsMenuItem : NSMenuItem {
     var creds: Credentials!
     
     init(creds: Credentials, action selector: Selector?) {
-        super.init(title: creds.name, action: selector, keyEquivalent: "2")
+        super.init(title: creds.name, action: selector, keyEquivalent: String(creds.id))
         self.creds = creds
     }
     

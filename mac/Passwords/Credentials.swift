@@ -3,6 +3,7 @@
 //
 
 struct Credentials : Decodable, Encodable {
+    var id: Int
     var name: String
     var site: String
     var username: String
