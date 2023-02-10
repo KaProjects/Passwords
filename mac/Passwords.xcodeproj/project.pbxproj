@@ -13,6 +13,7 @@
 		B066B0412996630300EFDE28 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B066B0402996630300EFDE28 /* main.swift */; };
 		B066B049299694C800EFDE28 /* CredsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B066B048299694C800EFDE28 /* CredsMenuItem.swift */; };
 		B066B04B299696F000EFDE28 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = B066B04A299696F000EFDE28 /* Credentials.swift */; };
+		B066B04D2996ABA000EFDE28 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B066B04C2996AB9F00EFDE28 /* Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		B066B0402996630300EFDE28 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B066B048299694C800EFDE28 /* CredsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredsMenuItem.swift; sourceTree = "<group>"; };
 		B066B04A299696F000EFDE28 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		B066B04C2996AB9F00EFDE28 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				B066B02B2996617600EFDE28 /* PasswordsApp.swift */,
 				B066B04A299696F000EFDE28 /* Credentials.swift */,
 				B066B048299694C800EFDE28 /* CredsMenuItem.swift */,
+				B066B04C2996AB9F00EFDE28 /* Data.swift */,
 				B066B02F2996617700EFDE28 /* Assets.xcassets */,
 				B066B0342996617700EFDE28 /* Passwords.entitlements */,
 				B066B0312996617700EFDE28 /* Preview Content */,
@@ -146,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B066B02C2996617600EFDE28 /* PasswordsApp.swift in Sources */,
+				B066B04D2996ABA000EFDE28 /* Data.swift in Sources */,
 				B066B0412996630300EFDE28 /* main.swift in Sources */,
 				B066B04B299696F000EFDE28 /* Credentials.swift in Sources */,
 				B066B049299694C800EFDE28 /* CredsMenuItem.swift in Sources */,

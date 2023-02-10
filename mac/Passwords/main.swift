@@ -1,7 +1,4 @@
 //
-//  main.swift
-//  Password Manager
-//
 //  Created by Stanislav Kaleta on 10.02.2023.
 //
 

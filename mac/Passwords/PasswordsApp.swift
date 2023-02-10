@@ -1,7 +1,4 @@
 //
-//  Password_ManagerApp.swift
-//  Password Manager
-//
 //  Created by Stanislav Kaleta on 09.02.2023.
 //
 
@@ -30,19 +27,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func setupMenus() {
-        statusItem.menu = NSMenu()
+        let menu = NSMenu()
         
-        statusItem.menu!.addItem(NSMenuItem(title: "Add", action: #selector(addCreds), keyEquivalent: "1"))
+        menu.addItem(NSMenuItem(title: "Add", action: #selector(addCreds), keyEquivalent: "1"))
         
-        statusItem.menu!.addItem(NSMenuItem.separator())
+        menu.addItem(NSMenuItem.separator())
         
         for creds in readCreds() {
-            statusItem.menu!.addItem(CredsMenuItem(creds: creds, action: #selector(copyToClipboard(from:))))
+            menu.addItem(CredsMenuItem(creds: creds, action: #selector(copyToClipboard(from:))))
         }
 
-        statusItem.menu!.addItem(NSMenuItem.separator())
+        menu.addItem(NSMenuItem.separator())
 
-        statusItem.menu!.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        
+        statusItem.menu = menu
     }
     
     
@@ -59,36 +58,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
         pasteboard.setString(from.creds.password, forType: NSPasteboard.PasteboardType.string)
-    }
-    
-    
-    func writeCreds(creds: [Credentials]) -> Void {
-        do {
-            let fileURL = try FileManager.default
-                .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                .appendingPathComponent("creds.json")
-            
-            try JSONEncoder()
-                .encode(creds)
-                .write(to: fileURL)
-        } catch {
-            print("error writing creds")
-        }
-    }
-    
-    func readCreds() -> [Credentials] {
-        do {
-            let fileURL = try FileManager.default
-                .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-                .appendingPathComponent("creds.json")
-            
-            let data = try Data(contentsOf: fileURL)
-            let pastData = try JSONDecoder().decode([Credentials].self, from: data)
-            
-            return pastData
-        } catch {
-            print("error reading creds")
-            return []
-        }
     }
 }
