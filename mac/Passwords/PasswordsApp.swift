@@ -11,59 +11,84 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private var statusItem: NSStatusItem!
 
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
-        // 2
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        // 3
+
         if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "1.circle", accessibilityDescription: "1")
+            guard let logo = NSImage(named: NSImage.Name("AppIcon")) else { return }
+
+            let resizedLogo = NSImage(size: NSSize(width: 18, height: 18), flipped: false) { (dstRect) -> Bool in
+                logo.draw(in: dstRect)
+                return true
+            }
+            
+            button.image = resizedLogo
         }
         
         setupMenus()
     }
     
     func setupMenus() {
-        // 1
-        let menu = NSMenu()
+        statusItem.menu = NSMenu()
+        
+        statusItem.menu!.addItem(NSMenuItem(title: "Add", action: #selector(addCreds), keyEquivalent: "1"))
+        
+        statusItem.menu!.addItem(NSMenuItem.separator())
+        
+        for creds in readCreds() {
+            statusItem.menu!.addItem(CredsMenuItem(creds: creds, action: #selector(copyToClipboard(from:))))
+        }
 
-        // 2
-        let one = NSMenuItem(title: "One", action: #selector(didTapOne) , keyEquivalent: "1")
-        menu.addItem(one)
+        statusItem.menu!.addItem(NSMenuItem.separator())
 
-        let two = NSMenuItem(title: "Two", action: #selector(didTapTwo) , keyEquivalent: "2")
-        menu.addItem(two)
-
-        let three = NSMenuItem(title: "Three", action: #selector(didTapThree) , keyEquivalent: "3")
-        menu.addItem(three)
-
-        menu.addItem(NSMenuItem.separator())
-
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
-
-        // 3
-        statusItem.menu = menu
+        statusItem.menu!.addItem(NSMenuItem(title: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
     }
     
-    // 1
-    private func changeStatusBarButton(number: Int) {
-        if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "\(number).circle", accessibilityDescription: number.description)
+    
+    @objc func addCreds() {
+        var allCreds = readCreds()
+        let newCreds = Credentials(name: "n" + String(allCreds.count), site: String(allCreds.count), username: String(allCreds.count), password: "p" + String(allCreds.count))
+        allCreds.append(newCreds)
+        writeCreds(creds: allCreds)
+        
+        setupMenus()
+    }
+
+    @objc func copyToClipboard(from: CredsMenuItem) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(from.creds.password, forType: NSPasteboard.PasteboardType.string)
+    }
+    
+    
+    func writeCreds(creds: [Credentials]) -> Void {
+        do {
+            let fileURL = try FileManager.default
+                .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                .appendingPathComponent("creds.json")
+            
+            try JSONEncoder()
+                .encode(creds)
+                .write(to: fileURL)
+        } catch {
+            print("error writing creds")
         }
     }
-
-    @objc func didTapOne() {
-        changeStatusBarButton(number: 1)
-    }
-
-    @objc func didTapTwo() {
-        changeStatusBarButton(number: 2)
-    }
-
-    @objc func didTapThree() {
-        changeStatusBarButton(number: 3)
-    }
     
-    
+    func readCreds() -> [Credentials] {
+        do {
+            let fileURL = try FileManager.default
+                .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .appendingPathComponent("creds.json")
+            
+            let data = try Data(contentsOf: fileURL)
+            let pastData = try JSONDecoder().decode([Credentials].self, from: data)
+            
+            return pastData
+        } catch {
+            print("error reading creds")
+            return []
+        }
+    }
 }
