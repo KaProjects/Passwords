@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="document" type="documenType"/>
+
+    <xs:complexType name="documenType">
+        <xs:sequence>
+            <xs:element name="data"  type="dataType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="password" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="dataType">
+        <xs:attribute name="hash" type="xs:string" use="required"/>
+    </xs:complexType>
+</xs:schema>
